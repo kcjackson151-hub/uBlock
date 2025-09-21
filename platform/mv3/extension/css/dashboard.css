@@ -36,6 +36,7 @@ nav > .tabButton:hover {
 
 body[data-pane="settings"] #dashboard-nav .tabButton[data-pane="settings"],
 body[data-pane="rulesets"] #dashboard-nav .tabButton[data-pane="rulesets"],
+body[data-pane="filters"] #dashboard-nav .tabButton[data-pane="filters"],
 body[data-pane="develop"] #dashboard-nav .tabButton[data-pane="develop"],
 body[data-pane="about"] #dashboard-nav .tabButton[data-pane="about"] {
     background-color: var(--dashboard-tab-active-surface);
@@ -56,6 +57,7 @@ body > section {
     }
 body[data-pane="settings"] > section[data-pane="settings"],
 body[data-pane="rulesets"] > section[data-pane="rulesets"],
+body[data-pane="filters"] > section[data-pane="filters"],
 body[data-pane="develop"] > section[data-pane="develop"],
 body[data-pane="about"] > section[data-pane="about"] {
     display: block;

@@ -619,15 +619,6 @@ async function start() {
     });
 }
 
-let observer = new IntersectionObserver(entries => {
-    for ( const entry of entries ) {
-        if ( entry.isIntersecting === false ) { continue; }
-        start();
-        observer.disconnect();
-        observer = null;
-        break;
-    }
-});
-observer.observe(qs$('section[data-pane="develop"]'));
+dom.onFirstShown(start, qs$('section[data-pane="develop"]'));
 
 /******************************************************************************/
