@@ -105,9 +105,16 @@
     </section>
     <!-- -------- -->
     <section data-pane="filters">
-        <ul class="hostnames">
-        </ul>
-        <details class="importFromText"><summary>Import</summary><textarea spellcheck="false"placeholder="customFiltersImportTextareaPlaceholder"></textarea></details>
+        <ul class="hostnames"></ul>
+        <aside>
+            <details class="importFromText"><summary data-i18n="customFiltersImportExportLabel">_</summary>
+                <textarea spellcheck="false"placeholder="customFiltersImportTextareaPlaceholder"></textarea>
+                <p>
+                    <button class="iconified dontshrink" type="button"><span class="fa-icon">download-alt</span><span data-i18n="importAndAppendButton">_</span><span class="hover"></span></button>
+                    <button class="iconified dontshrink" type="button"><span class="fa-icon">upload-alt</span><span data-i18n="exportButton">_</span><span class="hover"></span></button><input type="file" accept="text/plain">
+                </p>
+            </details>
+        </aside>
     </section>
     <!-- -------- -->
     <section data-pane="develop">

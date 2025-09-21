@@ -87,8 +87,12 @@
     "message": "Regions, languages",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
+  "customFiltersImportExportLabel": {
+    "message": "Import / Export",
+    "description": "Text label heading the import/export area of custom filters"
+  },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Paste here specific cosmetic filters to import",
+    "message": "Paste here specific cosmetic filters to add",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {

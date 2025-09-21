@@ -517,7 +517,7 @@ class Editor {
     importFromFile() {
         const editor = this.editor;
         if ( typeof editor.importFromFile !== 'function' ) { return; }
-        const input = qs$('input[type="file"]');
+        const input = qs$('section[data-pane="develop"] input[type="file"]');
         input.accept = editor.ioAccept || '';
         input.onchange = ev => {
             input.onchange = null;

@@ -401,6 +401,63 @@ async function importFromText(text) {
 
 /******************************************************************************/
 
+function importFromTextarea(ev) {
+    const { target } = ev;
+    importFromText(target.value);
+    const details = target.closest('details');
+    if ( details.matches(':focus,:focus-within') === false ) {
+        details.open = false;
+    }
+    target.value = '';
+}
+
+/******************************************************************************/
+
+function importFromFile() {
+    const input = qs$('section[data-pane="filters"] input[type="file"]');
+    input.onchange = ev => {
+        input.onchange = null;
+        const file = ev.target.files[0];
+        if ( file === undefined || file.name === '' ) { return; }
+        const fr = new FileReader();
+        fr.onload = ( ) => {
+            if ( typeof fr.result !== 'string' ) { return; }
+            importFromText(fr.result);
+        };
+        fr.readAsText(file);
+    };
+    // Reset to empty string, this will ensure a change event is properly
+    // triggered if the user pick a file, even if it's the same as the last
+    // one picked.
+    input.value = '';
+    input.click();
+    dom.prop('section[data-pane="filters"] details', 'open', false);
+}
+
+/******************************************************************************/
+
+function exportToFile() {
+    const lines = [];
+    for ( const hostnameNode of qsa$('.hostnames li.hostname') ) {
+        const hostname = hostnameFromNode(hostnameNode);
+        const selectors = selectorsFromNode(hostnameNode);
+        for ( const selector of selectors ) {
+            lines.push(`${hostname}##${toPrettySelector(selector)}`);
+        }
+    }
+    if ( lines.length === 0 ) { return; }
+    lines.push('');
+    const text = lines.join('\n');
+    const a = document.createElement('a');
+    a.href = `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`;
+    dom.attr(a, 'download', 'my-ubol-filters.txt');
+    dom.attr(a, 'type', 'text/plain');
+    a.click();
+    dom.prop('section[data-pane="filters"] details', 'open', false);
+}
+
+/******************************************************************************/
+
 async function start() {
     renderCustomFilters();
 
@@ -409,13 +466,9 @@ async function start() {
     dom.on(dataContainer, 'input', 'section[data-pane="filters"] [contenteditable]', commitEdit);
     dom.on(dataContainer, 'click', 'section[data-pane="filters"] .remove', onTrashClicked);
     dom.on(dataContainer, 'click', 'section[data-pane="filters"] .undo', onUndoClicked);
-    dom.on('.importFromText textarea', 'focusout', ev => {
-        const { target } = ev;
-        importFromText(target.value);
-        const details = target.closest('details');
-        details.open = false;
-        target.value = '';
-    });
+    dom.on('section[data-pane="filters"] details textarea', 'focusout', importFromTextarea);
+    dom.on('section[data-pane="filters"] [data-i18n="importAndAppendButton"]', 'click', importFromFile);
+    dom.on('section[data-pane="filters"] [data-i18n="exportButton"]', 'click', exportToFile);
 
     browser.storage.local.onChanged.addListener((changes, area) => {
         if ( area !== undefined && area !== 'local' ) { return; }
